@@ -1,4 +1,4 @@
-# Basics-of-Utility
+# Basics-of-Unity
 1. Install Unity and Unity Hub
 Download Unity Hub:
 Go to the Unity official website and download Unity Hub.
