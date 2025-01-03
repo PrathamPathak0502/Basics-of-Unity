@@ -86,7 +86,8 @@ Building the Game:
 Go to File > Build Settings.
 Select a platform and click Build to export your project.
 
-Steps to Create a Simple Ping Ball Setup in Unity
+**_Steps to Create a Simple Ping Ball Setup in Unity_**
+
 1. Create the Ball (Sphere)
 Go to GameObject > 3D Object > Sphere.
 Rename it to Ball (optional).
