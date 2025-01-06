@@ -16,9 +16,16 @@ public class BulletController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   if(transform.position.z>= 15.0f) //this will help to give the bullet a distance how much it should travel 
+    {   if(transform.position.z>= 100.0f) //this will help to give the bullet a distance how much it should travel 
             Destroy(this.gameObject);
     else
         transform.Translate(Vector3.forward*5.0f* Time.deltaTime);
     }
+     public void OnCollisionEnter(Collision collision)
+ {
+     if (collision.gameObject.name == "Wall") //we place a cube from 3d object and when bullet will hit this bullet will get destroy
+         Destroy(this.gameObject);
+
+
+ }
 }
