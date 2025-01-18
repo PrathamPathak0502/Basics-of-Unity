@@ -159,5 +159,8 @@ Click **Create Project** to open the Unity editor.
    - In the **Hierarchy**, right-click the object and select **Deactivate**.
 4. Optional - Layers for Rendering:
    - Move the object to a different layer and configure the **Camera Culling Mask** to exclude that layer.
+  
+
+#For more info you can read my blog :- https://medium.com/@prathampathak0502     
 
 
