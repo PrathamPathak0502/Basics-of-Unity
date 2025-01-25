@@ -159,7 +159,18 @@ Click **Create Project** to open the Unity editor.
    - In the **Hierarchy**, right-click the object and select **Deactivate**.
 4. Optional - Layers for Rendering:
    - Move the object to a different layer and configure the **Camera Culling Mask** to exclude that layer.
+
   
+
+
+1. Rigidbody Component (for Physics)
+
+private Rigidbody rb; // Reference to the Rigidbody component
+What is it?
+The Rigidbody component is a Unity component that allows an object to be affected by physics (gravity, forces, etc.). In this case, it’s used to apply a jump force when the spacebar is pressed.
+Why is it important?
+Without a Rigidbody, an object cannot respond to physics-based interactions, like gravity or jumping, which is why it's required for the AddForce method to work.
+
 
 #For more info you can read my blog :- https://medium.com/@prathampathak0502     
 
