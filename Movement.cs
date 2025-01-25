@@ -4,19 +4,39 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Rigidbody rb; // Reference to the Rigidbody component
+
+    public float moveSpeed = 5f;
+    public float rotationSpeed = 30f;
+    public float scaleSpeed = 0.01f;
+    public float jumpForce = 5f;
+
     void Start()
     {
-        Debug.Log("Start Function xecuted");
-        transform.Translate(Vector3.right*0.5f);
+        Debug.Log("Start Function Executed");
+        rb = GetComponent<Rigidbody>(); // Get the Rigidbody component
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Debug.Log(" update Function xecuted");
-        // transform.Translate(Vector3.right*0.5f);
-        // transform.Rotate(Vector3.up * 30.0f);
-        transform.localScale += new Vector3(0,0.01f,0);
+        // Debug message for each frame
+        Debug.Log("Update Function Executed");
+
+        // Move the object with arrow keys 
+        float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
+        float moveY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;
+        transform.Translate(new Vector3(moveX, 0, moveY));
+
+        // Rotate the object continuously
+        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+
+        // Scale the object gradually
+        transform.localScale += new Vector3(0, scaleSpeed, 0);
+
+        // Jump when spacebar is pressed
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 }
