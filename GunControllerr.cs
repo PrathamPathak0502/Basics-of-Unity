@@ -2,27 +2,30 @@ using UnityEngine;
 
 public class GunControllerr : MonoBehaviour
 {
-    public GameObject bulletPrefab; // Prefab for the bullet
-    public Transform bulletSpawnPoint; // Spawn point for the bullet
-    public float moveSpeed = 5f; // Movement speed
-    public float bulletSpeed = 10f; // Speed of the bullet
-    public AudioClip gunSound; // Audio clip for the gun sound
-    public ParticleSystem muzzleFlash; // Muzzle flash effect
-    private AudioSource audioSource; // Audio source for playing sounds
+    public GameObject bulletPrefab;
+    public Transform bulletSpawnPoint;
+    public float moveSpeed = 5f;
+    public float bulletSpeed = 10f;
+    public AudioClip gunSound;
+    public ParticleSystem muzzleFlash;
+    private AudioSource audioSource;
+    private bool isAutomatic = true;
+    private bool isReloading = false;
+    private int maxAmmo = 10;
+    private int currentAmmo;
 
     void Start()
     {
-        // Initialize the audio source
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
+        currentAmmo = maxAmmo;
     }
 
     void Update()
     {
-        // Handle movement
         if (Input.GetKey(KeyCode.UpArrow))
         {
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
@@ -33,10 +36,19 @@ public class GunControllerr : MonoBehaviour
             transform.Translate(-Vector3.forward * moveSpeed * Time.deltaTime);
         }
 
-        // Fire bullet on pressing Enter
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && !isReloading && currentAmmo > 0)
         {
             FireBullet();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading)
+        {
+            StartCoroutine(ReloadGun());
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            SwitchFireMode();
         }
     }
 
@@ -44,24 +56,16 @@ public class GunControllerr : MonoBehaviour
     {
         if (bulletPrefab != null && bulletSpawnPoint != null)
         {
-            // Instantiate bullet
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-
-            // Add velocity to the bullet
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             if (rb != null)
             {
                 rb.velocity = bulletSpawnPoint.forward * bulletSpeed;
             }
-
-            // Play gun sound
             PlayGunSound();
-
-            // Trigger muzzle flash effect
             TriggerMuzzleFlash();
-
-            // Destroy bullet after 3 seconds
             Destroy(bullet, 3f);
+            currentAmmo--;
         }
     }
 
@@ -79,5 +83,18 @@ public class GunControllerr : MonoBehaviour
         {
             muzzleFlash.Play();
         }
+    }
+
+    void SwitchFireMode()
+    {
+        isAutomatic = !isAutomatic;
+    }
+
+    System.Collections.IEnumerator ReloadGun()
+    {
+        isReloading = true;
+        yield return new WaitForSeconds(2f); // Simulate reload time
+        currentAmmo = maxAmmo;
+        isReloading = false;
     }
 }
